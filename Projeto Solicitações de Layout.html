@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitação de Layout</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  h2 {
+    text-align: center;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  fieldset {
+    margin-bottom: 20px;
+  }
+  .pagina {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .pagina label {
+    display: inline-block;
+    width: 150px;
+    margin-bottom: 5px;
+  }
+  .btn-adicionar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn-adicionar:hover {
+    background-color: #45a049;
+  }
+  .btn-excluir {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  .btn-excluir:hover {
+    background-color: #da190b;
+  }
+</style>
+</head>
+<body>
+
+<h2>Solicitação de Layout</h2>
+
+<form action="URL_DO_WEB_APP" method="post" id="formulario">
+
+  <fieldset>
+    <legend>Informações Básicas:</legend>
+    <label for="nome_vendedor">Nome do Vendedor:</label>
+    <input type="text" id="nome_vendedor" name="nome_vendedor" required><br>
+    <label for="data_solicitacao">Data da Solicitação:</label>
+    <input type="date" id="data_solicitacao" name="data_solicitacao" required><br>
+  </fieldset>
+
+  <fieldset>
+    <legend>Detalhes do Cliente:</legend>
+    <label for="nome_cliente">Nome do Cliente:</label>
+    <input type="text" id="nome_cliente" name="nome_cliente" required><br>
+  </fieldset>
+
+  <div id="paginas">
+    <fieldset class="pagina">
+      <legend>Descrição da Peça:</legend>
+      <button type="button" class="btn-excluir" onclick="removerPagina(this)">Excluir Página</button><br>
+      <label for="tipo_material">Tipo de Material:</label>
+      <input type="text" id="tipo_material" name="tipo_material[]" required><br>
+      <label for="medidas_peca">Medidas da Peça (Altura x Largura):</label>
+      <input type="text" id="medidas_peca" name="medidas_peca[]" required><br>
+      <label for="referencia_peca">Referência da Peça:</label>
+      <input type="text" id="referencia_peca" name="referencia_peca[]"><br>
+      <label for="cor_material">Cor do Material:</label>
+      <input type="text" id="cor_material" name="cor_material[]" required><br>
+      <label for="tipo_gravacao">Tipo de Gravação:</label>
+      <input type="text" id="tipo_gravacao" name="tipo_gravacao[]"><br>
+      <label for="cor_gravacao">Cor da Gravação:</label>
+      <input type="text" id="cor_gravacao" name="cor_gravacao[]"><br>
+      <label for="tipo_ziper">Tipo de Zíper:</label>
+      <input type="text" id="tipo_ziper" name="tipo_ziper[]"><br>
+    </fieldset>
+  </div>
+
+  <button type="button" class="btn-adicionar" onclick="adicionarPagina()">Adicionar Página</button>
+
+  <fieldset>
+    <legend>Requisitos Adicionais:</legend>
+    <label for="quantidade">Quantidade Desejada:</label>
+    <input type="number" id="quantidade" name="quantidade" required><br>
+    <label for="prazo_entrega">Prazo de Entrega:</label>
+    <input type="date" id="prazo_entrega" name="prazo_entrega" required><br>
+    <label for="orcamento">Orçamento Disponível:</label>
+    <input type="text" id="orcamento" name="orcamento" required><br>
+  </fieldset>
+
+  <fieldset>
+    <legend>Observações Adicionais:</legend>
+    <textarea id="observacoes" name="observacoes" rows="4" cols="50"></textarea><br>
+  </fieldset>
+
+  <input type="submit" value="Enviar Solicitação">
+
+</form>
+
+<script>
+function adicionarPagina() {
+  var paginasDiv = document.getElementById("paginas");
+  var novaPaginaFieldset = document.createElement("fieldset");
+  novaPaginaFieldset.className = "pagina";
+  novaPaginaFieldset.innerHTML = `
+    <legend>Descrição da Peça:</legend>
+    <button type="button" class="btn-excluir" onclick="removerPagina(this)">Excluir Página</button><br>
+    <label for="tipo_material">Tipo de Material:</label>
+    <input type="text" id="tipo_material" name="tipo_material[]" required><br>
+    <label for="medidas_peca">Medidas da Peça (Altura x Largura):</label>
+    <input type="text" id="medidas_peca" name="medidas_peca[]" required><br>
+    <label for="referencia_peca">Referência da Peça:</label>
+    <input type="text" id="referencia_peca" name="referencia_peca[]"><br>
+    <label for="cor_material">Cor do Material:</label>
+    <input type="text" id="cor_material" name="cor_material[]" required><br>
+    <label for="tipo_gravacao">Tipo de Gravação:</label>
+    <input type="text" id="tipo_gravacao" name="tipo_gravacao[]"><br>
+    <label for="cor_gravacao">Cor da Gravação:</label>
+    <input type="text" id="cor_gravacao" name="cor_gravacao[]"><br>
+    <label for="tipo_ziper">Tipo de Zíper:</label>
+    <input type="text" id="tipo_ziper" name="tipo_ziper[]"><br>
+  `;
+  paginasDiv.appendChild(novaPaginaFieldset);
+}
+
+function removerPagina(botaoRemover) {
+  var paginaRemover = botaoRemover.parentNode;
+  paginaRemover.parentNode.removeChild(paginaRemover);
+}
+</script>
+
+</body>
+</html>
